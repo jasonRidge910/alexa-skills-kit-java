@@ -1,0 +1,191 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.5.RELEASE</version>
+	</parent>
+	<groupId>com.amazon.speech</groupId>
+	<artifactId>alexa-skills-kit-java</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>Alexa Skills Kit for Java</name>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<!-- maven plugins -->
+		<org.apache.maven.plugins_maven-war-plugin.version>2.6</org.apache.maven.plugins_maven-war-plugin.version>
+
+		<!-- ======================================= -->
+		<!-- non spring-boot managed dependencies -->
+		<!-- ======================================= -->
+
+		<!-- com.fasterxml -->
+		<com.fasterxml.jackson_datatype-json-org>1.8.0</com.fasterxml.jackson_datatype-json-org>
+
+		<!-- org.apache -->
+		<org.apache_commons-codec.version>1.10</org.apache_commons-codec.version>
+		<org.apache_commons-lang3>3.4</org.apache_commons-lang3>
+		<org.apache_commons-io>2.5</org.apache_commons-io>
+	</properties>
+
+	<dependencies>
+		<!-- ======================================= -->
+		<!-- Spring Boot Managed Dependencies -->
+		<!-- ======================================= -->
+		<dependency>
+			<!-- http://projects.spring.io/spring-boot/ -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-joda -->
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+		</dependency>
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8 -->
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jdk8</artifactId>
+		</dependency>
+
+		<!-- ======================================= -->
+		<!-- Dependencies NOT managed by Spring Boot -->
+		<!-- ======================================= -->
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.10</version>
+		</dependency>		
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core -->
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-lambda-java-core</artifactId>
+			<version>1.1.0</version>
+		</dependency>		
+		
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-datatype-json-org -->
+			<groupId>com.fasterxml.jackson</groupId>
+			<artifactId>jackson-datatype-json-org</artifactId>
+			<version>${com.fasterxml.jackson_datatype-json-org}</version>
+		</dependency>
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${org.apache_commons-lang3}</version>
+		</dependency>
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${org.apache_commons-codec.version}</version>
+		</dependency>
+		<dependency>
+			<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${org.apache_commons-io}</version>
+		</dependency>
+	</dependencies>
+
+	<!-- =============================== -->
+	<!-- All releases build and plug-ins -->
+	<!-- =============================== -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<!-- =============================== -->
+		<!-- This POM's Plug-in Management -->
+		<!-- =============================== -->
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${org.apache.maven.plugins_maven-war-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+	<profiles>
+		<!-- ========================= -->
+		<!-- Local Development Profile -->
+		<!-- ========================= -->
+		<profile>
+			<id>LOCAL</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+
+		<!-- =============================== -->
+		<!-- Development Environment Profile -->
+		<!-- =============================== -->
+		<profile>
+			<id>DEV</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+		</profile>
+
+		<!-- =================================== -->
+		<!-- Quality Testing Environment Profile -->
+		<!-- =================================== -->
+		<profile>
+			<id>QA</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+		</profile>
+
+		<!-- =================================== -->
+		<!-- End 2 End Environment Profile (RTB) -->
+		<!-- =================================== -->
+		<profile>
+			<id>E2E</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+		</profile>
+
+		<!-- ==================================== -->
+		<!-- Production Environment Profile (RTB) -->
+		<!-- ==================================== -->
+		<profile>
+			<id>PROD</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+		</profile>
+
+	</profiles>
+
+</project>
